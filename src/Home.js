@@ -9,6 +9,7 @@ import IconButton from 'material-ui/IconButton'
 import MenuIcon from 'material-ui/svg-icons/navigation/menu'
 import NavigationClose from 'material-ui/svg-icons/navigation/close';
 import {cyan500, fullBlack, white, purpleA700, limeA200} from 'material-ui/styles/colors';
+import Logo from './Logo';
 
 const styles = {
   root:{
@@ -39,14 +40,9 @@ const muiTheme = getMuiTheme({
   },
 });
 
-const logo = (
-  <div><img style={styles.logo} src={require('./images/logo.png')} /></div>
-);
-
-
 const Home = () => (
   <MuiThemeProvider muiTheme={getMuiTheme(muiTheme)}>
-    <AppBar iconElementLeft={logo}  iconElementRight={<IconButton><MenuIcon /></IconButton>} style={{
+    <AppBar iconElementLeft={Logo}  iconElementRight={<IconButton><MenuIcon /></IconButton>} style={{
       backgroundColor: 'white'
     }} />
     <div style={styles.root}>

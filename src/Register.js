@@ -6,6 +6,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import {fullBlack, purpleA700, limeA200} from 'material-ui/styles/colors';
 import { Link } from "react-router-dom";
+import Logo from './Logo';
 
 const styles = {
   root:{
@@ -40,18 +41,13 @@ const muiTheme = getMuiTheme({
     textColor: fullBlack
   },
 });
-
-const logo = (
-  <div><Link to="/"><img style={styles.logo} alt="" src={require('./images/logo.png')} /></Link></div>
-);
-
 const space = (
     <div style={{ height: 10, width: 50}}></div>
 )
 
 const Register = ({ match }) => (
   <MuiThemeProvider muiTheme={getMuiTheme(muiTheme)}>
-    <AppBar iconElementLeft={logo} title="Registro" titleStyle={styles.title}  iconElementRight={space} style={{
+    <AppBar iconElementLeft={Logo} title="Registro" titleStyle={styles.title}  iconElementRight={space} style={{
       backgroundColor: 'white'
     }} />
     <div style={styles.root}>

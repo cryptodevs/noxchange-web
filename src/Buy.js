@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import IconButton from 'material-ui/IconButton'
 import {GridList, GridTile} from 'material-ui/GridList';
 import StarBorder from 'material-ui/svg-icons/toggle/star-border';
-import UpperMenu from './UpperMenu';
+import UpperMenu from './UpperMenu'
 import Logo from './Logo';
 
 const styles = {
@@ -56,9 +56,9 @@ const muiTheme = getMuiTheme({
   },
 });
 
-const Sell = ({ match }) => (
+const Buy = ({ match }) => (
   <MuiThemeProvider muiTheme={getMuiTheme(muiTheme)}>
-    <AppBar iconElementLeft={Logo} title="Vender" titleStyle={styles.title}  iconElementRight={UpperMenu} style={{
+    <AppBar iconElementLeft={Logo} title="Comprar" titleStyle={styles.title}  iconElementRight={UpperMenu} style={{
       backgroundColor: 'white'
     }} />
     <div style={styles.root}>
@@ -67,31 +67,28 @@ const Sell = ({ match }) => (
       cellHeight={160}
       style={styles.gridList}
     >
-        <Link to="/coinconfiguration/chaucha">
+        <Link to="/market/chaucha">
             <GridTile
             key={''}
             title={'Chaucha'}
-            subtitle={<span><b>{'Activo'}</b></span>}
             actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
             >
             <img alt="" style={styles.tiles} src={require('./images/chaucha.png')} />
             </GridTile>
         </Link>
-        <Link to="/coinconfiguration/luka">
+        <Link to="/market/luka">
             <GridTile
             key={''}
             title={'LuKa'}
-            subtitle={<span><b>{'Activo'}</b></span>}
             actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
             >
             <img alt="" style={styles.tiles} src={require('./images/luka.png')} />
             </GridTile>
         </Link>
-        <Link to="/coinconfiguration/ethereum">
+        <Link to="/market/ethereum">
             <GridTile
             key={''}
             title={'Ethereum'}
-            subtitle={<span><b>{'Inactivo'}</b></span>}
             actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
             >
             <img alt="" style={styles.tiles} src={require('./images/ethereum.png')} />
@@ -104,4 +101,4 @@ const Sell = ({ match }) => (
 
 );
 
-export default Sell;
+export default Buy;

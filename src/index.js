@@ -12,6 +12,8 @@ import PaymentMethods from './PaymentMethods';
 import Khipu from './Khipu';
 import Sell from './Sell';
 import CoinConfiguration from './CoinConfiguration';
+import Buy from './Buy'
+import Market from './Market';
 
 ReactDOM.render(
     <BrowserRouter>
@@ -25,6 +27,8 @@ ReactDOM.render(
             <Route path="/setupkhipu" component={Khipu} />
             <Route path="/sell" component={Sell} />
             <Route path="/coinconfiguration/:coin" component={CoinConfiguration} />
+            <Route path="/buy" component={Buy} />
+            <Route path="/market/:coin" component={Market} />
         </div>
     </BrowserRouter>
 , document.getElementById('root'));

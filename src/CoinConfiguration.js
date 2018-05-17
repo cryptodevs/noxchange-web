@@ -7,6 +7,9 @@ import TextField from 'material-ui/TextField';
 import {fullBlack, purpleA700, limeA200, grey400} from 'material-ui/styles/colors';
 import { Link } from "react-router-dom";
 import Toggle from 'material-ui/Toggle';
+import UpperMenu from './UpperMenu';
+import Logo from './Logo';
+
 
 const styles = {
   root:{
@@ -51,17 +54,9 @@ const muiTheme = getMuiTheme({
   },
 });
 
-const logo = (
-  <div><Link to="/"><img style={styles.logo} alt="" src={require('./images/logo.png')} /></Link></div>
-);
-
-const space = (
-    <div style={{ height: 10, width: 50}}></div>
-)
-
 const CoinConfiguration = ({ match }) => (
   <MuiThemeProvider muiTheme={getMuiTheme(muiTheme)}>
-    <AppBar iconElementLeft={logo} title={"Configurar " + match.params.coin.toUpperCase()} titleStyle={styles.title}  iconElementRight={space} style={{
+    <AppBar iconElementLeft={Logo} title={"Configurar " + match.params.coin.toUpperCase()} titleStyle={styles.title}  iconElementRight={UpperMenu} style={{
       backgroundColor: 'white'
     }} />
     <div style={styles.root}>

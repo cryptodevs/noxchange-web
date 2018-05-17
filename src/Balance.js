@@ -3,13 +3,11 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import AppBar from 'material-ui/AppBar';
 import {fullBlack, purpleA700, limeA200, white} from 'material-ui/styles/colors';
-import { Link } from "react-router-dom";
 import IconButton from 'material-ui/IconButton'
-import IconMenu from 'material-ui/IconMenu'
-import MenuItem from 'material-ui/MenuItem'
-import MenuIcon from 'material-ui/svg-icons/navigation/menu'
 import {GridList, GridTile} from 'material-ui/GridList';
 import StarBorder from 'material-ui/svg-icons/toggle/star-border';
+import UpperMenu from './UpperMenu';
+import Logo from './Logo';
 
 const styles = {
   root:{
@@ -57,29 +55,10 @@ const muiTheme = getMuiTheme({
   },
 });
 
-const logo = (
-  <div><Link to="/"><img style={styles.logo} alt="" src={require('./images/logo.png')} /></Link></div>
-);
-
-const menu = (
-    <IconMenu
-    iconButtonElement={
-      <IconButton><MenuIcon /></IconButton>
-    }
-    targetOrigin={{horizontal: 'right', vertical: 'top'}}
-    anchorOrigin={{horizontal: 'right', vertical: 'top'}}
-  >
-    <MenuItem primaryText="Comprar" />
-    <MenuItem primaryText="Vender" disabled={true} />
-    <MenuItem primaryText="Saldos" />
-    <Link to="/methods" style={{ textDecoration: 'none'}}><MenuItem primaryText="Formas de pago" /></Link>
-    <MenuItem primaryText="Salir" />
-  </IconMenu>    
-)
 
 const Balance = ({ match }) => (
   <MuiThemeProvider muiTheme={getMuiTheme(muiTheme)}>
-    <AppBar iconElementLeft={logo} title="Balance" titleStyle={styles.title}  iconElementRight={menu} style={{
+    <AppBar iconElementLeft={Logo} title="Balance" titleStyle={styles.title}  iconElementRight={UpperMenu} style={{
       backgroundColor: 'white'
     }} />
     <div style={styles.root}>
