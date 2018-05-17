@@ -7,6 +7,11 @@ import Register from './Register'
 import registerServiceWorker from './registerServiceWorker';
 import RegisterSuccess from './RegisterSuccess';
 import Login from './Login';
+import Balance from './Balance';
+import PaymentMethods from './PaymentMethods';
+import Khipu from './Khipu';
+import Sell from './Sell';
+import CoinConfiguration from './CoinConfiguration';
 
 ReactDOM.render(
     <BrowserRouter>
@@ -15,6 +20,11 @@ ReactDOM.render(
             <Route path="/register" component={Register} />
             <Route path="/register_success" component={RegisterSuccess} />
             <Route path="/login" component={Login} />
+            <Route path="/balance" component={Balance} />
+            <Route path="/methods" component={PaymentMethods} />
+            <Route path="/setupkhipu" component={Khipu} />
+            <Route path="/sell" component={Sell} />
+            <Route path="/coinconfiguration/:coin" component={CoinConfiguration} />
         </div>
     </BrowserRouter>
 , document.getElementById('root'));

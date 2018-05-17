@@ -77,9 +77,9 @@ const menu = (
   </IconMenu>    
 )
 
-const Balance = ({ match }) => (
+const Sell = ({ match }) => (
   <MuiThemeProvider muiTheme={getMuiTheme(muiTheme)}>
-    <AppBar iconElementLeft={logo} title="Balance" titleStyle={styles.title}  iconElementRight={menu} style={{
+    <AppBar iconElementLeft={logo} title="Vender" titleStyle={styles.title}  iconElementRight={menu} style={{
       backgroundColor: 'white'
     }} />
     <div style={styles.root}>
@@ -88,30 +88,36 @@ const Balance = ({ match }) => (
       cellHeight={160}
       style={styles.gridList}
     >
-        <GridTile
-          key={''}
-          title={'Chaucha'}
-          subtitle={<span>Saldo: <b>{'200.10'}</b></span>}
-          actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
-        >
-          <img alt="" style={styles.tiles} src={require('./images/chaucha.png')} />
-        </GridTile>    
-        <GridTile
-          key={''}
-          title={'LuKa'}
-          subtitle={<span>Saldo: <b>{'154.130'}</b></span>}
-          actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
-        >
-          <img alt="" style={styles.tiles} src={require('./images/luka.png')} />
-        </GridTile>
-        <GridTile
-          key={''}
-          title={'Ethereum'}
-          subtitle={<span>Saldo: <b>{'0.320'}</b></span>}
-          actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
-        >
-          <img alt="" style={styles.tiles} src={require('./images/ethereum.png')} />
-        </GridTile>        
+        <Link to="/coinconfiguration/chaucha">
+            <GridTile
+            key={''}
+            title={'Chaucha'}
+            subtitle={<span><b>{'Activo'}</b></span>}
+            actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
+            >
+            <img alt="" style={styles.tiles} src={require('./images/chaucha.png')} />
+            </GridTile>
+        </Link>
+        <Link to="/coinconfiguration/luka">
+            <GridTile
+            key={''}
+            title={'LuKa'}
+            subtitle={<span><b>{'Activo'}</b></span>}
+            actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
+            >
+            <img alt="" style={styles.tiles} src={require('./images/luka.png')} />
+            </GridTile>
+        </Link>
+        <Link to="/coinconfiguration/ethereum">
+            <GridTile
+            key={''}
+            title={'Ethereum'}
+            subtitle={<span><b>{'Inactivo'}</b></span>}
+            actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
+            >
+            <img alt="" style={styles.tiles} src={require('./images/ethereum.png')} />
+            </GridTile>
+        </Link>
     </GridList>
     </div>
 
@@ -119,4 +125,4 @@ const Balance = ({ match }) => (
 
 );
 
-export default Balance;
+export default Sell;
