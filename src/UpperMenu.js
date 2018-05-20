@@ -18,6 +18,7 @@ const UpperMenu = (
     <Link to="/sell" style={{ textDecoration: 'none'}}><MenuItem primaryText="Vender" disabled={true} /></Link>
     <Link to="/balance" style={{ textDecoration: 'none'}}><MenuItem primaryText="Saldos" /></Link>
     <Link to="/methods" style={{ textDecoration: 'none'}}><MenuItem primaryText="Formas de pago" /></Link>
+    <Link to="/operations" style={{ textDecoration: 'none'}}><MenuItem primaryText="Operaciones" /></Link>
     <MenuItem primaryText="Salir" />
   </IconMenu>    
 )

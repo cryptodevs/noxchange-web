@@ -45,6 +45,9 @@ const styles = {
   menu: {
       backgroundColor: purpleA700,
       color: white
+  },
+  links: {
+    textDecoration: 'none'
   }
   
 };
@@ -88,59 +91,70 @@ const Market = ({ match }) => (
         <div style={{ height: 20}}></div>
 
       <List>
-        <Subheader>Ordenar por: <Link to="#"> Precio </Link> | <Link to="#">Ventas</Link></Subheader>        
-        <ListItem
-          leftAvatar={<Avatar src={require('./images/anonymous.png')} />}
-          rightIconButton={rightIconMenu}
-          primaryText="johndoe79"
-          secondaryText={
-            <p>
-              <span style={{color: darkBlack}}>Precio: 59.01 CLP </span><br />
-              Cantidad: 300 | Ventas: 19 &nbps;&nbps;&nbps;&nbps;
-            </p>
-          }
-          secondaryTextLines={2}
-        />
-        <Divider inset={true} />
-        <ListItem
-          leftAvatar={<Avatar src={require('./images/anonymous.png')} />}
-          rightIconButton={rightIconMenu}
-          primaryText="jbatman"
-          secondaryText={
-            <p>
-              <span style={{color: darkBlack}}>Precio: 59.01 CLP</span><br />
-              Cantidad: 300 | Ventas: 19
-            </p>
-          }
-          secondaryTextLines={2}
-        />
-        <Divider inset={true} />
-        <ListItem
-          leftAvatar={<Avatar src={require('./images/anonymous.png')} />}
-          rightIconButton={rightIconMenu}
-          primaryText="lolcatz"
-          secondaryText={
-            <p>
-              <span style={{color: darkBlack}}>Precio: 59.01 CLP</span><br />
-              Cantidad: 300 | Ventas: 19
-            </p>
-          }
-          secondaryTextLines={2}
-        />
-        <Divider inset={true} />
-        <ListItem
-          leftAvatar={<Avatar src={require('./images/anonymous.png')} />}
-          rightIconButton={rightIconMenu}
-          primaryText="ittheclown"
-          secondaryText={
-            <p>
-              <span style={{color: darkBlack}}>Precio: 59.01 CLP</span><br />
-              Cantidad: 300 | Ventas: 19
-            </p>
-          }
-          secondaryTextLines={2}
-        />
+        <Subheader>Ordenar por: <Link to="#"> Precio </Link> | <Link to="#">Ventas</Link></Subheader>
+        <Link style={styles.links} to={"/confirmbuy/" + match.params.coin + "/999"}>
+            <ListItem
+            leftAvatar={<Avatar src={require('./images/anonymous.png')} />}
+            rightIconButton={rightIconMenu}
+            primaryText="johndoe79"
+            secondaryText={
+                <p>
+                <span style={{color: darkBlack}}>Precio: 59.01 CLP </span><br />
+                Cantidad: 300 | Ventas: 19 &nbps;&nbps;&nbps;&nbps;
+                </p>
+            }
+            secondaryTextLines={2}
+            />
+            <Divider inset={true} />
+        </Link>
+
+        <Link style={styles.links} to={"/confirmbuy/" + match.params.coin + "/999"}>
+            <ListItem
+            leftAvatar={<Avatar src={require('./images/anonymous.png')} />}
+            rightIconButton={rightIconMenu}
+            primaryText="jbatman"
+            secondaryText={
+                <p>
+                <span style={{color: darkBlack}}>Precio: 59.01 CLP</span><br />
+                Cantidad: 300 | Ventas: 19
+                </p>
+            }
+            secondaryTextLines={2}
+            />
+            <Divider inset={true} />
+        </Link>
+
+        <Link style={styles.links} to={"/confirmbuy/" + match.params.coin + "/999"}>
+            <ListItem
+            leftAvatar={<Avatar src={require('./images/anonymous.png')} />}
+            rightIconButton={rightIconMenu}
+            primaryText="lolcatz"
+            secondaryText={
+                <p>
+                <span style={{color: darkBlack}}>Precio: 59.01 CLP</span><br />
+                Cantidad: 300 | Ventas: 19
+                </p>
+            }
+            secondaryTextLines={2}
+            />
+            <Divider inset={true} />
+        </Link>
+        <Link style={styles.links} to={"/confirmbuy/" + match.params.coin + "/999"}>
+            <ListItem
+            leftAvatar={<Avatar src={require('./images/anonymous.png')} />}
+            rightIconButton={rightIconMenu}
+            primaryText="ittheclown"
+            secondaryText={
+                <p>
+                <span style={{color: darkBlack}}>Precio: 59.01 CLP</span><br />
+                Cantidad: 300 | Ventas: 19
+                </p>
+            }
+            secondaryTextLines={2}
+            />
+        </Link>  
       </List>
+      
     </div>
 
     </MuiThemeProvider>

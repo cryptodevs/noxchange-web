@@ -14,6 +14,7 @@ import Sell from './Sell';
 import CoinConfiguration from './CoinConfiguration';
 import Buy from './Buy'
 import Market from './Market';
+import ConfirmBuy from './ConfirmBuy';
 
 ReactDOM.render(
     <BrowserRouter>
@@ -29,6 +30,7 @@ ReactDOM.render(
             <Route path="/coinconfiguration/:coin" component={CoinConfiguration} />
             <Route path="/buy" component={Buy} />
             <Route path="/market/:coin" component={Market} />
+            <Route path="/confirmbuy/:coin/:id" component={ConfirmBuy} />
         </div>
     </BrowserRouter>
 , document.getElementById('root'));
