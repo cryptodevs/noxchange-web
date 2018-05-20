@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!-- not using last version yet -->
+<script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
+<script type="text/javascript">
+    var web3 = new Web3();
+    // docker run -d -p 8545:8545 trufflesuite/ganache-cli:latest
+    web3.setProvider(new web3.providers.HttpProvider('http://localhost:8545/'));
+
+    // ganache creates 10 accounts, each with 100eth
+    // send 0.1 eth from 0 account to 1 account
+    var sender = web3.eth.accounts[0];
+    var receiver = web3.eth.accounts[1];
+    var amount = web3.toWei(0.1, 'ether')
+    web3.eth.sendTransaction({from: sender, to: receiver, value: amount} , function(error, txHash){
+      if (error) { console.log(error) return }
+      console.log('tx', txHash);
+      web3.eth.getTransaction(txHash, (e, res) => console.log(e, res))
+    })
+
+    // watch last txs to chek for our balance
+    web3.eth.filter('latest').watch(function() {
+      for (let acc of web3.eth.accounts) {
+        var originalBalance = web3.eth.getBalance(acc).toNumber();
+        console.log(acc, web3.fromWei(originalBalance), 'ETH')
+      }
+    });
+</script>
+</head>
+<body>
+</body>
+</html>
