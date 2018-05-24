@@ -5,8 +5,9 @@ import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import {fullBlack, purpleA700, limeA200} from 'material-ui/styles/colors';
-import { Link } from "react-router-dom";
 import Logo from './Logo';
+import serializeForm from 'form-serialize'
+import { registerUser } from './utils/api'
 
 const styles = {
   root:{
@@ -45,34 +46,54 @@ const space = (
     <div style={{ height: 10, width: 50}}></div>
 )
 
+async function handleSubmit(e) {
+  e.preventDefault()
+  const values = serializeForm(e.target, { hash: true })
+  try{
+    if(values['password'] === values['repeat_password']){
+      const response = await registerUser(values)
+      console.log(response)
+    }
+
+  }
+  catch(err){
+    console.error('ERROR', err)  
+  }
+}
+
 const Register = ({ match }) => (
   <MuiThemeProvider muiTheme={getMuiTheme(muiTheme)}>
     <AppBar iconElementLeft={Logo} title="Registro" titleStyle={styles.title}  iconElementRight={space} style={{
       backgroundColor: 'white'
     }} />
     <div style={styles.root}>
+      <form onSubmit={handleSubmit} >
         <div style={{ height: 20}}></div>
         <TextField
         hintText="Ej: johndoe79"
+        name="username"
         floatingLabelText="Nombre de usuario"
         /><br />
         <TextField
         hintText="Ej: john@gmail.com"
+        name="email"
         type="email"
         floatingLabelText="Email"
         /><br />
         <TextField        
         type="password"
+        name="password"
         floatingLabelText="Contraseña"
         /><br />
         <TextField
+        name="repeat_password"
         type="password"
         floatingLabelText="Repetir contraseña"
         />
         <div style={{ height: 150}}></div>
       
-        <Link to="/register_success"><RaisedButton label="Crear cuenta" primary={true} style={styles.button} /></Link>
-      
+        <RaisedButton label="Crear cuenta" type="submit" primary={true} style={styles.button} />
+      </form>
     </div>
 
     </MuiThemeProvider>

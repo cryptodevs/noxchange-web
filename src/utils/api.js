@@ -15,8 +15,13 @@ export async function registerUser(user) {
         body: JSON.stringify(user)
     })
     
-    const data = await response.json()
-    return data
+    if(response.ok === true){
+        const data = await response    
+        return data.json()
+    }
+    else{
+        throw new Error("got an error registering new user")
+    }
 }
 
 export async function  getToken(user) {
@@ -29,7 +34,6 @@ export async function  getToken(user) {
         body: JSON.stringify(user)
     })
 
-    console.log('DEBUG1', response.ok)
     if(response.ok === true){
         const data = await response    
         return data.json()
