@@ -5,8 +5,9 @@ import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import {fullBlack, purpleA700, limeA200} from 'material-ui/styles/colors';
-import { Link } from "react-router-dom";
+import serializeForm from 'form-serialize'
 import Logo from './Logo';
+import { getToken } from './utils/api'
 
 const styles = {
   root:{
@@ -17,7 +18,8 @@ const styles = {
     alignItems: 'center'
   },
   button: {
-    margin: 12
+    margin: 12,
+    alignItems: 'center'
   },
   logo: {
     width: 50,
@@ -46,27 +48,43 @@ const space = (
     <div style={{ height: 10, width: 50}}></div>
 )
 
+async function handleSubmit(e) {
+  e.preventDefault()
+  const values = serializeForm(e.target, { hash: true })
+  try{
+    const response = await getToken(values)
+    console.log(response)
+  }
+  catch(err){
+    console.error('ERROR', err)  
+  }
+  
+  
+}
+
 const Login = ({ match }) => (
   <MuiThemeProvider muiTheme={getMuiTheme(muiTheme)}>
     <AppBar iconElementLeft={Logo} title="Login" titleStyle={styles.title}  iconElementRight={space} style={{
       backgroundColor: 'white'
     }} />
     <div style={styles.root}>
-        <div style={{ height: 130}}></div>
-
-        <TextField
-        hintText="Ej: john@gmail.com"
-        type="email"
-        floatingLabelText="Email"
-        /><br />
-        <TextField
-        type="password"
-        floatingLabelText="Contraseña"
-        /><br />
-        <div style={{ height: 150}}></div>
-      
-        <Link to="/balance"><RaisedButton label="Iniciar sesión" primary={true} style={styles.button} /></Link>
-      
+        <div style={{ height: 60}}></div>
+        <form onSubmit={handleSubmit} >
+          <TextField
+          hintText="Ej: john@mail.com"
+          name="email"
+          type="email"
+          floatingLabelText="Email"
+          /><br />
+          <TextField
+          type="password"
+          name="password"
+          floatingLabelText="Contraseña"
+          /><br />
+          <div style={{ height: 60}}></div>
+        
+          <RaisedButton label="Iniciar sesión" primary={true} style={styles.button} type="submit" />
+        </form>
     </div>
 
     </MuiThemeProvider>

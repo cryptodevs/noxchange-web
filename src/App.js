@@ -53,7 +53,7 @@ const Main = () => (
     <div style={styles.root} >
                   
       <div style={styles.item}>
-        <div style={{ height: 150}}></div>
+        <div style={{ height: 50}}></div>
 
         <img style={styles.mainLogo} alt="" src={require('./images/logo.png')} /></div>
       <div style={styles.item}>
