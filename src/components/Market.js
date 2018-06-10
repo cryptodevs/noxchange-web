@@ -94,7 +94,7 @@ const Market = ({ match }) => (
         <Subheader>Ordenar por: <Link to="#"> Precio </Link> | <Link to="#">Ventas</Link></Subheader>
         <Link style={styles.links} to={"/confirmbuy/" + match.params.coin + "/999"}>
             <ListItem
-            leftAvatar={<Avatar src={require('./images/anonymous.png')} />}
+            leftAvatar={<Avatar src={require('../images/anonymous.png')} />}
             rightIconButton={rightIconMenu}
             primaryText="johndoe79"
             secondaryText={
@@ -110,7 +110,7 @@ const Market = ({ match }) => (
 
         <Link style={styles.links} to={"/confirmbuy/" + match.params.coin + "/999"}>
             <ListItem
-            leftAvatar={<Avatar src={require('./images/anonymous.png')} />}
+            leftAvatar={<Avatar src={require('../images/anonymous.png')} />}
             rightIconButton={rightIconMenu}
             primaryText="jbatman"
             secondaryText={
@@ -126,7 +126,7 @@ const Market = ({ match }) => (
 
         <Link style={styles.links} to={"/confirmbuy/" + match.params.coin + "/999"}>
             <ListItem
-            leftAvatar={<Avatar src={require('./images/anonymous.png')} />}
+            leftAvatar={<Avatar src={require('../images/anonymous.png')} />}
             rightIconButton={rightIconMenu}
             primaryText="lolcatz"
             secondaryText={
@@ -141,7 +141,7 @@ const Market = ({ match }) => (
         </Link>
         <Link style={styles.links} to={"/confirmbuy/" + match.params.coin + "/999"}>
             <ListItem
-            leftAvatar={<Avatar src={require('./images/anonymous.png')} />}
+            leftAvatar={<Avatar src={require('../images/anonymous.png')} />}
             rightIconButton={rightIconMenu}
             primaryText="ittheclown"
             secondaryText={

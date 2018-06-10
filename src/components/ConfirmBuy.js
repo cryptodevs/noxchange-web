@@ -60,7 +60,7 @@ const ConfirmBuy = ({ match }) => (
     }} />
     <div style={styles.root}>
         <div style={{ height: 20}}></div>
-        <img style={styles.logo} alt="" src={require('./images/'+ match.params.coin + '.png')} />
+        <img style={styles.logo} alt="" src={require('../images/'+ match.params.coin + '.png')} />
         
         <TextField
         hintText="Ver billetera, dirección pública"

@@ -55,7 +55,7 @@ const Main = () => (
       <div style={styles.item}>
         <div style={{ height: 50}}></div>
 
-        <img style={styles.mainLogo} alt="" src={require('./images/logo.png')} /></div>
+        <img style={styles.mainLogo} alt="" src={require('../images/logo.png')} /></div>
       <div style={styles.item}>
         <p style={styles.paragraph}>Una nueva forma de comprar y vender criptomonedas en Chile.</p>
       </div>

@@ -2,19 +2,19 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Route } from 'react-router-dom'
 import './index.css';
-import App from './App';
-import Register from './Register'
+import App from './components/App';
+import Register from './components/Register'
 import registerServiceWorker from './registerServiceWorker';
-import RegisterSuccess from './RegisterSuccess';
-import Login from './Login';
-import Balance from './Balance';
-import PaymentMethods from './PaymentMethods';
-import Khipu from './Khipu';
-import Sell from './Sell';
-import CoinConfiguration from './CoinConfiguration';
-import Buy from './Buy'
-import Market from './Market';
-import ConfirmBuy from './ConfirmBuy';
+import RegisterSuccess from './components/RegisterSuccess';
+import Login from './components/Login';
+import Balance from './components/Balance';
+import PaymentMethods from './components/PaymentMethods';
+import Khipu from './components/Khipu';
+import Sell from './components/Sell';
+import CoinConfiguration from './components/CoinConfiguration';
+import Buy from './components/Buy'
+import Market from './components/Market';
+import ConfirmBuy from './components/ConfirmBuy';
 
 ReactDOM.render(
     <BrowserRouter>

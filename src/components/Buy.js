@@ -73,7 +73,7 @@ const Buy = ({ match }) => (
             title={'Chaucha'}
             actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
             >
-            <img alt="" style={styles.tiles} src={require('./images/chaucha.png')} />
+            <img alt="" style={styles.tiles} src={require('../images/chaucha.png')} />
             </GridTile>
         </Link>
         <Link to="/market/luka">
@@ -82,7 +82,7 @@ const Buy = ({ match }) => (
             title={'LuKa'}
             actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
             >
-            <img alt="" style={styles.tiles} src={require('./images/luka.png')} />
+            <img alt="" style={styles.tiles} src={require('../images/luka.png')} />
             </GridTile>
         </Link>
         <Link to="/market/ethereum">
@@ -91,7 +91,7 @@ const Buy = ({ match }) => (
             title={'Ethereum'}
             actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
             >
-            <img alt="" style={styles.tiles} src={require('./images/ethereum.png')} />
+            <img alt="" style={styles.tiles} src={require('../images/ethereum.png')} />
             </GridTile>
         </Link>
     </GridList>

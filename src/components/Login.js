@@ -5,9 +5,9 @@ import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import {fullBlack, purpleA700, limeA200} from 'material-ui/styles/colors';
-import Logo from './Logo';
 import serializeForm from 'form-serialize'
-import { registerUser } from './utils/api'
+import Logo from './Logo';
+import { getToken } from '../utils/api'
 
 const styles = {
   root:{
@@ -18,7 +18,8 @@ const styles = {
     alignItems: 'center'
   },
   button: {
-    margin: 12
+    margin: 12,
+    alignItems: 'center'
   },
   logo: {
     width: 50,
@@ -42,6 +43,7 @@ const muiTheme = getMuiTheme({
     textColor: fullBlack
   },
 });
+
 const space = (
     <div style={{ height: 10, width: 50}}></div>
 )
@@ -50,54 +52,41 @@ async function handleSubmit(e) {
   e.preventDefault()
   const values = serializeForm(e.target, { hash: true })
   try{
-    if(values['password'] === values['repeat_password']){
-      const response = await registerUser(values)
-      console.log(response)
-    }
-
+    const response = await getToken(values)
+    console.log(response)
   }
   catch(err){
     console.error('ERROR', err)  
   }
 }
 
-const Register = ({ match }) => (
+const Login = ({ match }) => (
   <MuiThemeProvider muiTheme={getMuiTheme(muiTheme)}>
-    <AppBar iconElementLeft={Logo} title="Registro" titleStyle={styles.title}  iconElementRight={space} style={{
+    <AppBar iconElementLeft={Logo} title="Login" titleStyle={styles.title}  iconElementRight={space} style={{
       backgroundColor: 'white'
     }} />
     <div style={styles.root}>
-      <form onSubmit={handleSubmit} >
-        <div style={{ height: 20}}></div>
-        <TextField
-        hintText="Ej: johndoe79"
-        name="username"
-        floatingLabelText="Nombre de usuario"
-        /><br />
-        <TextField
-        hintText="Ej: john@gmail.com"
-        name="email"
-        type="email"
-        floatingLabelText="Email"
-        /><br />
-        <TextField        
-        type="password"
-        name="password"
-        floatingLabelText="Contraseña"
-        /><br />
-        <TextField
-        name="repeat_password"
-        type="password"
-        floatingLabelText="Repetir contraseña"
-        />
-        <div style={{ height: 150}}></div>
-      
-        <RaisedButton label="Crear cuenta" type="submit" primary={true} style={styles.button} />
-      </form>
+        <div style={{ height: 60}}></div>
+        <form onSubmit={handleSubmit} >
+          <TextField
+          hintText="Ej: john@mail.com"
+          name="email"
+          type="email"
+          floatingLabelText="Email"
+          /><br />
+          <TextField
+          type="password"
+          name="password"
+          floatingLabelText="Contraseña"
+          /><br />
+          <div style={{ height: 60}}></div>
+        
+          <RaisedButton label="Iniciar sesión" primary={true} style={styles.button} type="submit" />
+        </form>
     </div>
 
     </MuiThemeProvider>
 
 );
 
-export default Register;
+export default Login;

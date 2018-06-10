@@ -3,9 +3,8 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import AppBar from 'material-ui/AppBar';
 import {fullBlack, purpleA700, limeA200, white} from 'material-ui/styles/colors';
-import IconButton from 'material-ui/IconButton'
+import { Link } from "react-router-dom";
 import {GridList, GridTile} from 'material-ui/GridList';
-import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 import UpperMenu from './UpperMenu';
 import Logo from './Logo';
 
@@ -55,10 +54,9 @@ const muiTheme = getMuiTheme({
   },
 });
 
-
-const Balance = ({ match }) => (
+const PaymentMethods = ({ match }) => (
   <MuiThemeProvider muiTheme={getMuiTheme(muiTheme)}>
-    <AppBar iconElementLeft={Logo} title="Balance" titleStyle={styles.title}  iconElementRight={UpperMenu} style={{
+    <AppBar iconElementLeft={Logo} title="Formas de pago" titleStyle={styles.title}  iconElementRight={UpperMenu} style={{
       backgroundColor: 'white'
     }} />
     <div style={styles.root}>
@@ -67,30 +65,13 @@ const Balance = ({ match }) => (
       cellHeight={160}
       style={styles.gridList}
     >
-        <GridTile
+        <Link to="/setupkhipu"><GridTile
           key={''}
-          title={'Chaucha'}
-          subtitle={<span>Saldo: <b>{'200.10'}</b></span>}
-          actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
+          title={'Configurar'}
         >
-          <img alt="" style={styles.tiles} src={require('./images/chaucha.png')} />
-        </GridTile>    
-        <GridTile
-          key={''}
-          title={'LuKa'}
-          subtitle={<span>Saldo: <b>{'154.130'}</b></span>}
-          actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
-        >
-          <img alt="" style={styles.tiles} src={require('./images/luka.png')} />
-        </GridTile>
-        <GridTile
-          key={''}
-          title={'Ethereum'}
-          subtitle={<span>Saldo: <b>{'0.320'}</b></span>}
-          actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
-        >
-          <img alt="" style={styles.tiles} src={require('./images/ethereum.png')} />
-        </GridTile>        
+          <img alt="" style={styles.tiles} src={require('../images/khipu.png')} />
+        </GridTile></Link>        
+       
     </GridList>
     </div>
 
@@ -98,4 +79,4 @@ const Balance = ({ match }) => (
 
 );
 
-export default Balance;
+export default PaymentMethods;

@@ -9,7 +9,7 @@ const styles = {
 }
 
 const Logo = (
-    <div><Link to="/"><img style={styles.logo} alt="" src={require('./images/logo.png')} /></Link></div>
+    <div><Link to="/"><img style={styles.logo} alt="" src={require('../images/logo.png')} /></Link></div>
 )
 
 export default Logo;

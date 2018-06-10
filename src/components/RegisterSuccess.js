@@ -53,7 +53,7 @@ const RegisterSuccess = () => (
       <div style={styles.item}>
         <div style={{ height: 230}}></div>
 
-        <img style={styles.mainLogo} alt="" src={require('./images/logo.png')} /></div>
+        <img style={styles.mainLogo} alt="" src={require('../images/logo.png')} /></div>
       <div style={styles.item}>
         <p style={styles.paragraph}>Te enviamos un correo para que confirmes tu cuenta.</p>
       </div>

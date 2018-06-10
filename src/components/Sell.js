@@ -74,7 +74,7 @@ const Sell = ({ match }) => (
             subtitle={<span><b>{'Activo'}</b></span>}
             actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
             >
-            <img alt="" style={styles.tiles} src={require('./images/chaucha.png')} />
+            <img alt="" style={styles.tiles} src={require('../images/chaucha.png')} />
             </GridTile>
         </Link>
         <Link to="/coinconfiguration/luka">
@@ -84,7 +84,7 @@ const Sell = ({ match }) => (
             subtitle={<span><b>{'Activo'}</b></span>}
             actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
             >
-            <img alt="" style={styles.tiles} src={require('./images/luka.png')} />
+            <img alt="" style={styles.tiles} src={require('../images/luka.png')} />
             </GridTile>
         </Link>
         <Link to="/coinconfiguration/ethereum">
@@ -94,7 +94,7 @@ const Sell = ({ match }) => (
             subtitle={<span><b>{'Inactivo'}</b></span>}
             actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
             >
-            <img alt="" style={styles.tiles} src={require('./images/ethereum.png')} />
+            <img alt="" style={styles.tiles} src={require('../images/ethereum.png')} />
             </GridTile>
         </Link>
     </GridList>

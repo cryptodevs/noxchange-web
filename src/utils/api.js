@@ -24,7 +24,7 @@ export async function registerUser(user) {
     }
 }
 
-export async function  getToken(user) {
+export async function  getToken(user) {    
     const response = await fetch(`${api}/user/token`, {
         method: 'POST',
         headers: {
