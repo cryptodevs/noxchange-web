@@ -8,6 +8,8 @@ import {fullBlack, purpleA700, limeA200} from 'material-ui/styles/colors';
 import serializeForm from 'form-serialize'
 import Logo from './Logo';
 import { getToken } from '../utils/api'
+import { Redirect } from 'react-router-dom'
+import CircularProgress from 'material-ui/CircularProgress';
 
 const styles = {
   root:{
@@ -18,8 +20,7 @@ const styles = {
     alignItems: 'center'
   },
   button: {
-    margin: 12,
-    alignItems: 'center'
+    alignItems: 'center'    
   },
   logo: {
     width: 50,
@@ -48,45 +49,109 @@ const space = (
     <div style={{ height: 10, width: 50}}></div>
 )
 
-async function handleSubmit(e) {
-  e.preventDefault()
-  const values = serializeForm(e.target, { hash: true })
-  try{
-    const response = await getToken(values)
-    console.log(response)
+
+class Login extends React.Component {
+  state = {
+    error : {
+      password: '',
+      email: ''
+    },
+    redirect: false,
+    token: '',
+    loading: false
   }
-  catch(err){
-    console.error('ERROR', err)  
+  
+  handleSubmit = async(e) => {
+    e.preventDefault()
+    const values = serializeForm(e.target, { hash: true })
+    try{
+      if(values.email && values.password){
+        this.setState((state) => ({
+          loading: true
+        }))
+        const response = await getToken(values)
+        if (response.token) {
+          this.setState((state) => ({
+            error: {             
+              email: '',
+              password: ''
+            },
+            token: response.token,
+            redirect: true
+          }))          
+        }
+
+      }
+      else {
+        if(!values.email) {
+          this.setState((state) => ({
+            error: {             
+              email: 'Este campo es requerido.'
+            }
+          }))
+        }
+        else {
+          this.setState((state) => ({
+            error: {
+              password: 'Este campo es requerido.' 
+            }
+          }))
+        }
+      }
+  
+    }
+    catch(err){
+      this.setState((state) => ({
+        error: {
+          password: 'Error al ingresar al sistema. Revisa tus datos e ingresa nuevamente'
+        },
+        loading: false
+      }))      
+
+    }
   }
+
+  render = () => {    
+    if(this.state.redirect){
+      return <Redirect to={{pathname: "/balance", state: {token: this.state.token}}} />;
+    } 
+    return (
+      <MuiThemeProvider muiTheme={getMuiTheme(muiTheme)}>
+      <AppBar iconElementLeft={Logo} title="Login" titleStyle={styles.title}  iconElementRight={space} style={{
+        backgroundColor: 'white'
+      }} />
+      <div style={styles.root}>
+          <div style={{ height: 60}}></div>
+          <form onSubmit={this.handleSubmit} >
+            <TextField
+            hintText="Ej: john@mail.com"
+            name="email"
+            type="email"
+            errorText={this.state.error.email}
+            floatingLabelText="Email"
+            /><br />
+            <TextField
+            type="password"
+            name="password"
+            errorText={this.state.error.password}
+            floatingLabelText="Contraseña"
+            /><br />
+            <div style={{ height: 60}}></div>
+
+            { !this.state.loading && 
+              <div style={{display: 'flex', alignContent:'center', justifyItems:'center'}}>
+                <RaisedButton label="Iniciar sesión" primary={true} style={styles.button} fullWidth={true} type="submit" />
+              </div>
+            }
+
+            { this.state.loading && <CircularProgress style={{marginLeft: 100}} /> }
+          </form>
+      </div>
+      
+      </MuiThemeProvider>
+    )  
+  };
 }
 
-const Login = ({ match }) => (
-  <MuiThemeProvider muiTheme={getMuiTheme(muiTheme)}>
-    <AppBar iconElementLeft={Logo} title="Login" titleStyle={styles.title}  iconElementRight={space} style={{
-      backgroundColor: 'white'
-    }} />
-    <div style={styles.root}>
-        <div style={{ height: 60}}></div>
-        <form onSubmit={handleSubmit} >
-          <TextField
-          hintText="Ej: john@mail.com"
-          name="email"
-          type="email"
-          floatingLabelText="Email"
-          /><br />
-          <TextField
-          type="password"
-          name="password"
-          floatingLabelText="Contraseña"
-          /><br />
-          <div style={{ height: 60}}></div>
-        
-          <RaisedButton label="Iniciar sesión" primary={true} style={styles.button} type="submit" />
-        </form>
-    </div>
-
-    </MuiThemeProvider>
-
-);
 
 export default Login;

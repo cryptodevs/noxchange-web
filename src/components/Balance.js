@@ -55,47 +55,53 @@ const muiTheme = getMuiTheme({
   },
 });
 
+class Balance extends React.Component {
+  render = () =>{
+    console.log(this.props.location.state.token)
+    return(
+      <MuiThemeProvider muiTheme={getMuiTheme(muiTheme)}>
+      <AppBar iconElementLeft={Logo} title="Balance" titleStyle={styles.title}  iconElementRight={UpperMenu} style={{
+        backgroundColor: 'white'
+      }} />
+      <div style={styles.root}>
+      <div style={{ height: 20}}></div>
+      <GridList
+        cellHeight={160}
+        style={styles.gridList}
+      >
+          <GridTile
+            key={''}
+            title={'Chaucha'}
+            subtitle={<span>Saldo: <b>{'200.10'}</b></span>}
+            actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
+          >
+            <img alt="" style={styles.tiles} src={require('../images/chaucha.png')} />
+          </GridTile>    
+          <GridTile
+            key={''}
+            title={'LuKa'}
+            subtitle={<span>Saldo: <b>{'154.130'}</b></span>}
+            actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
+          >
+            <img alt="" style={styles.tiles} src={require('../images/luka.png')} />
+          </GridTile>
+          <GridTile
+            key={''}
+            title={'Ethereum'}
+            subtitle={<span>Saldo: <b>{'0.320'}</b></span>}
+            actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
+          >
+            <img alt="" style={styles.tiles} src={require('../images/ethereum.png')} />
+          </GridTile>        
+      </GridList>
+      </div>
+  
+      </MuiThemeProvider>
+  
+    )
+  }
+}
 
-const Balance = ({ match }) => (
-  <MuiThemeProvider muiTheme={getMuiTheme(muiTheme)}>
-    <AppBar iconElementLeft={Logo} title="Balance" titleStyle={styles.title}  iconElementRight={UpperMenu} style={{
-      backgroundColor: 'white'
-    }} />
-    <div style={styles.root}>
-    <div style={{ height: 20}}></div>
-    <GridList
-      cellHeight={160}
-      style={styles.gridList}
-    >
-        <GridTile
-          key={''}
-          title={'Chaucha'}
-          subtitle={<span>Saldo: <b>{'200.10'}</b></span>}
-          actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
-        >
-          <img alt="" style={styles.tiles} src={require('../images/chaucha.png')} />
-        </GridTile>    
-        <GridTile
-          key={''}
-          title={'LuKa'}
-          subtitle={<span>Saldo: <b>{'154.130'}</b></span>}
-          actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
-        >
-          <img alt="" style={styles.tiles} src={require('../images/luka.png')} />
-        </GridTile>
-        <GridTile
-          key={''}
-          title={'Ethereum'}
-          subtitle={<span>Saldo: <b>{'0.320'}</b></span>}
-          actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
-        >
-          <img alt="" style={styles.tiles} src={require('../images/ethereum.png')} />
-        </GridTile>        
-    </GridList>
-    </div>
 
-    </MuiThemeProvider>
-
-);
 
 export default Balance;
