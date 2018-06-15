@@ -1,15 +1,16 @@
 import React from 'react';
+import { connect } from 'react-redux'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import {fullBlack, purpleA700, limeA200, grey400} from 'material-ui/styles/colors';
-import { Link } from "react-router-dom";
 import Toggle from 'material-ui/Toggle';
 import UpperMenu from './UpperMenu';
 import Logo from './Logo';
-
+import serialize from 'form-serialize'
+import MyAsksActions from '../services/reducers/MyAsksRedux';
 
 const styles = {
   root:{
@@ -54,47 +55,69 @@ const muiTheme = getMuiTheme({
   },
 });
 
-const CoinConfiguration = ({ match }) => (
-  <MuiThemeProvider muiTheme={getMuiTheme(muiTheme)}>
-    <AppBar iconElementLeft={Logo} title={"Configurar " + match.params.coin.toUpperCase()} titleStyle={styles.title}  iconElementRight={UpperMenu} style={{
-      backgroundColor: 'white'
-    }} />
-    <div style={styles.root}>
-        <div style={{ height: 20}}></div>
-        <img style={styles.logo} alt="" src={require('../images/'+ match.params.coin + '.png')} />
-        
-        <TextField
-        hintText="Ver billetera, dirección pública"
-        floatingLabelText="Dirección criptomoneda"
-        /><br />
-        <div style={styles.block}>
-            <Toggle labelStyle={styles.toggleLabel}
-            label="Activo"
-            style={styles.toggle}
-            /><br />
-            <Toggle labelStyle={styles.toggleLabel}
-            label="Precio mercado"
-            style={styles.toggle}
-            />
+
+class CoinConfiguration extends React.Component {
+
+  handleSubmit(e) {
+    e.preventDefault()
+    let ask = serialize(e.target, { hash: true, empty: true })
+    ask['market'] = this.props.match.params.coin
+    ask['market_price'] = ask['market_price'] !== ''
+    ask['status'] = ask['status'] !== ''
+    this.props.saveAsk(ask)
+  }
+
+  render() {
+    let { match } = this.props
+    return (
+      <MuiThemeProvider muiTheme={getMuiTheme(muiTheme)}>
+        <div>
+          <AppBar iconElementLeft={Logo} title={"Configurar " + match.params.coin.toUpperCase()} titleStyle={styles.title}  iconElementRight={UpperMenu} style={{
+            backgroundColor: 'white'
+          }} />
+          <div style={styles.root}>
+            <div style={{ height: 20}}></div>
+            <img style={styles.logo} alt="" src={require('../images/'+ match.params.coin + '.png')} />
+            <form onSubmit={this.handleSubmit.bind(this)}>
+              <div style={styles.block}>
+                <Toggle labelStyle={styles.toggleLabel}
+                  label="Activo"
+                  style={styles.toggle}
+                  name="status"
+                  value="true"
+                />
+                <br />
+                <Toggle labelStyle={styles.toggleLabel}
+                  label="Precio mercado"
+                  name="market_price"
+                  style={styles.toggle}
+                  value="true"
+                />
+              </div>
+              <br />
+              <TextField
+                name="qty"
+                floatingLabelText="Cantidad a la venta"
+              />
+              <br />
+              <TextField
+                floatingLabelText="Precio de venta CLP"
+                name="price"
+              />
+              <div style={{ height: 100}}></div>
+              <RaisedButton label="Guardar" primary={true} style={styles.button} type="submit"/>
+            </form>
+          </div>
         </div>
-        <br />
-        <TextField
-        type="number"
-        floatingLabelText="Cantidad a la venta"
-        />
-        <br />
-        <TextField
-        type="number"
-        floatingLabelText="Precio de venta CLP"
-        />        
-        <div style={{ height: 100}}></div>
-      
-        <Link to="/sell"><RaisedButton label="Guardar" primary={true} style={styles.button} /></Link>
-      
-    </div>
+      </MuiThemeProvider>
+    )
+  }
+}
 
-    </MuiThemeProvider>
+const mapStateToProps = ({ userAsks }) => ({ userAsks })
 
-);
+const mapDispatchToProps = (dispatch) => ({
+  saveAsk: (ask) => dispatch(MyAsksActions.saveAsk(ask)),
+})
 
-export default CoinConfiguration;
+export default connect(mapStateToProps, mapDispatchToProps)(CoinConfiguration)
