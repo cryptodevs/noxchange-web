@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Route } from 'react-router-dom'
+import { Provider } from 'react-redux'
 import './index.css';
 import App from './components/App';
 import Register from './components/Register'
@@ -15,8 +16,12 @@ import CoinConfiguration from './components/CoinConfiguration';
 import Buy from './components/Buy'
 import Market from './components/Market';
 import ConfirmBuy from './components/ConfirmBuy';
+import configureStore from './services/reducers'
+
+const store = configureStore()
 
 ReactDOM.render(
+  <Provider store={store}>
     <BrowserRouter>
         <div>
             <Route exact path="/" component={App} />
@@ -33,5 +38,6 @@ ReactDOM.render(
             <Route path="/confirmbuy/:coin/:id" component={ConfirmBuy} />
         </div>
     </BrowserRouter>
+  </Provider>
 , document.getElementById('root'));
 registerServiceWorker();

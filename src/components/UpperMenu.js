@@ -15,7 +15,7 @@ const UpperMenu = (
     anchorOrigin={{horizontal: 'right', vertical: 'top'}}
   >
     <Link to="/buy" style={{ textDecoration: 'none'}}><MenuItem primaryText="Comprar" /></Link>
-    <Link to="/sell" style={{ textDecoration: 'none'}}><MenuItem primaryText="Vender" disabled={true} /></Link>
+    <Link to="/sell" style={{ textDecoration: 'none'}}><MenuItem primaryText="Vender"/></Link>
     <Link to="/balance" style={{ textDecoration: 'none'}}><MenuItem primaryText="Saldos" /></Link>
     <Link to="/methods" style={{ textDecoration: 'none'}}><MenuItem primaryText="Formas de pago" /></Link>
     <Link to="/operations" style={{ textDecoration: 'none'}}><MenuItem primaryText="Operaciones" /></Link>

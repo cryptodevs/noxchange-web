@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import AppBar from 'material-ui/AppBar';
@@ -14,6 +15,7 @@ import MenuItem from 'material-ui/MenuItem';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import Logo from './Logo';
 import { Link } from "react-router-dom";
+import AsksActions from '../services/reducers/AsksRedux';
 
 const styles = {
   root:{
@@ -82,83 +84,61 @@ const rightIconMenu = (
     </IconMenu>
   );
 
-const Market = ({ match }) => (
-  <MuiThemeProvider muiTheme={getMuiTheme(muiTheme)}>
-    <AppBar iconElementLeft={Logo} title={"Comprar " + match.params.coin.toUpperCase()} titleStyle={styles.title}  iconElementRight={UpperMenu} style={{
-      backgroundColor: 'white'
-    }} />
-    <div style={styles.root}>
-        <div style={{ height: 20}}></div>
+class Market extends Component {
 
-      <List>
-        <Subheader>Ordenar por: <Link to="#"> Precio </Link> | <Link to="#">Ventas</Link></Subheader>
-        <Link style={styles.links} to={"/confirmbuy/" + match.params.coin + "/999"}>
-            <ListItem
-            leftAvatar={<Avatar src={require('../images/anonymous.png')} />}
-            rightIconButton={rightIconMenu}
-            primaryText="johndoe79"
-            secondaryText={
-                <p>
-                <span style={{color: darkBlack}}>Precio: 59.01 CLP </span><br />
-                Cantidad: 300 | Ventas: 19 &nbps;&nbps;&nbps;&nbps;
-                </p>
-            }
-            secondaryTextLines={2}
-            />
-            <Divider inset={true} />
-        </Link>
+  componentDidMount() {
+    const { match } = this.props
+    this.props.fetchAsks(match.params.coin)
+  }
 
-        <Link style={styles.links} to={"/confirmbuy/" + match.params.coin + "/999"}>
-            <ListItem
-            leftAvatar={<Avatar src={require('../images/anonymous.png')} />}
-            rightIconButton={rightIconMenu}
-            primaryText="jbatman"
-            secondaryText={
-                <p>
-                <span style={{color: darkBlack}}>Precio: 59.01 CLP</span><br />
-                Cantidad: 300 | Ventas: 19
-                </p>
-            }
-            secondaryTextLines={2}
-            />
-            <Divider inset={true} />
-        </Link>
+  asks() {
+    const { match, markets } = this.props
+    let market = markets[match.params.coin] || {asks: []}
+    return market.asks.map(ask => (
+      <Link key={ask.id} style={styles.links} to={"/confirmbuy/" + match.params.coin + "/" + ask.id}>
+        <ListItem
+          leftAvatar={<Avatar src={require('../images/anonymous.png')} />}
+          rightIconButton={rightIconMenu}
+          primaryText={ask.username}
+          secondaryText={
+            <p>
+              <span style={{color: darkBlack}}>Precio: {ask.price} CLP</span>
+              <br />
+              Cantidad: {ask.qty} | Ventas: 19
+            </p>
+          }
+          secondaryTextLines={2}
+        />
+        <Divider inset={true} />
+      </Link>
+    ))
+  }
 
-        <Link style={styles.links} to={"/confirmbuy/" + match.params.coin + "/999"}>
-            <ListItem
-            leftAvatar={<Avatar src={require('../images/anonymous.png')} />}
-            rightIconButton={rightIconMenu}
-            primaryText="lolcatz"
-            secondaryText={
-                <p>
-                <span style={{color: darkBlack}}>Precio: 59.01 CLP</span><br />
-                Cantidad: 300 | Ventas: 19
-                </p>
-            }
-            secondaryTextLines={2}
-            />
-            <Divider inset={true} />
-        </Link>
-        <Link style={styles.links} to={"/confirmbuy/" + match.params.coin + "/999"}>
-            <ListItem
-            leftAvatar={<Avatar src={require('../images/anonymous.png')} />}
-            rightIconButton={rightIconMenu}
-            primaryText="ittheclown"
-            secondaryText={
-                <p>
-                <span style={{color: darkBlack}}>Precio: 59.01 CLP</span><br />
-                Cantidad: 300 | Ventas: 19
-                </p>
-            }
-            secondaryTextLines={2}
-            />
-        </Link>  
-      </List>
-      
-    </div>
+  render() {
+    const { match } = this.props
+    return (
+      <MuiThemeProvider muiTheme={getMuiTheme(muiTheme)}>
+        <div>
+        <AppBar iconElementLeft={Logo} title={"Comprar " + match.params.coin.toUpperCase()} titleStyle={styles.title}  iconElementRight={UpperMenu} style={{
+          backgroundColor: 'white'
+        }} />
+        <div style={styles.root}>
+            <div style={{ height: 20}}></div>
+          <List>
+            <Subheader>Ordenar por: <Link to="#"> Precio </Link> | <Link to="#">Ventas</Link></Subheader>
+            {this.asks()}
+          </List>
+        </div>
+        </div>
+      </MuiThemeProvider>
+    )
+  }
+}
 
-    </MuiThemeProvider>
+const mapStateToProps = ({ markets }) => ({ markets })
 
-);
+const mapDispatchToProps = (dispatch) => ({
+  fetchAsks: (market) => dispatch(AsksActions.fetchAsks(market)),
+})
 
-export default Market;
+export default connect(mapStateToProps, mapDispatchToProps)(Market)
