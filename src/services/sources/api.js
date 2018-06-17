@@ -16,10 +16,12 @@ const create = () => {
 
   const market = (market) => api.get(`/market/${market}`)
   const saveAsk = (ask) => api.post(`/ask`, ask)
+  const myAsks = () => api.get(`/user/asks`)
 
   return {
     market,
     saveAsk,
+    myAsks,
   }
 }
 

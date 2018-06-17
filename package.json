@@ -6,6 +6,7 @@
     "apisauce": "^0.15.2",
     "form-serialize": "^0.7.2",
     "material-ui": "^0.20.1",
+    "ramda": "^0.25.0",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
     "react-redux": "^5.0.7",

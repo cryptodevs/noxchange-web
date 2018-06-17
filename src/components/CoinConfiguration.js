@@ -7,9 +7,10 @@ import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import {fullBlack, purpleA700, limeA200, grey400} from 'material-ui/styles/colors';
 import Toggle from 'material-ui/Toggle';
+import * as R from 'ramda'
+import { Redirect } from 'react-router-dom'
 import UpperMenu from './UpperMenu';
 import Logo from './Logo';
-import serialize from 'form-serialize'
 import MyAsksActions from '../services/reducers/MyAsksRedux';
 
 const styles = {
@@ -58,16 +59,37 @@ const muiTheme = getMuiTheme({
 
 class CoinConfiguration extends React.Component {
 
+  constructor(props) {
+    super(props)
+    let { match } = props
+    let userAsk = props.asks[match.params.coin] || {}
+    this.state = {
+      redirect: false,
+      status: userAsk.status,
+      market_price: userAsk.market_price,
+      qty: userAsk.qty,
+      price: userAsk.price,
+    }
+    this.handleChange = this.handleChange.bind(this);
+  }
+
   handleSubmit(e) {
     e.preventDefault()
-    let ask = serialize(e.target, { hash: true, empty: true })
+    let ask = R.pick(['market_price', 'status', 'price', 'qty'], this.state)
     ask['market'] = this.props.match.params.coin
-    ask['market_price'] = ask['market_price'] !== ''
-    ask['status'] = ask['status'] !== ''
     this.props.saveAsk(ask)
+    this.setState({redirect: true})
+  }
+
+  handleChange(event, val) {
+    event.preventDefault()
+    this.setState({[event.target.name]: val})
   }
 
   render() {
+    if (this.state.redirect)
+      return <Redirect to='/sell'/>
+
     let { match } = this.props
     return (
       <MuiThemeProvider muiTheme={getMuiTheme(muiTheme)}>
@@ -85,6 +107,8 @@ class CoinConfiguration extends React.Component {
                   style={styles.toggle}
                   name="status"
                   value="true"
+                  toggled={this.state.status}
+                  onToggle={(event, isInputChecked) => this.handleChange(event, isInputChecked)}
                 />
                 <br />
                 <Toggle labelStyle={styles.toggleLabel}
@@ -92,17 +116,23 @@ class CoinConfiguration extends React.Component {
                   name="market_price"
                   style={styles.toggle}
                   value="true"
+                  toggled={this.state.market_price}
+                  onToggle={(event, isInputChecked) => this.handleChange(event, isInputChecked)}
                 />
               </div>
               <br />
               <TextField
                 name="qty"
                 floatingLabelText="Cantidad a la venta"
+                value={this.state.qty}
+                onChange={(event, val) => this.handleChange(event, val)}
               />
               <br />
               <TextField
                 floatingLabelText="Precio de venta CLP"
                 name="price"
+                value={this.state.price}
+                onChange={(event, val) => this.handleChange(event, val)}
               />
               <div style={{ height: 100}}></div>
               <RaisedButton label="Guardar" primary={true} style={styles.button} type="submit"/>
@@ -114,7 +144,7 @@ class CoinConfiguration extends React.Component {
   }
 }
 
-const mapStateToProps = ({ userAsks }) => ({ userAsks })
+const mapStateToProps = ({ userAsks }) => ({ asks: userAsks.asks })
 
 const mapDispatchToProps = (dispatch) => ({
   saveAsk: (ask) => dispatch(MyAsksActions.saveAsk(ask)),
