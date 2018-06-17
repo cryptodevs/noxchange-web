@@ -55,6 +55,7 @@ const muiTheme = getMuiTheme({
 
 const ConfirmBuy = ({ match }) => (
   <MuiThemeProvider muiTheme={getMuiTheme(muiTheme)}>
+    <div>
     <AppBar iconElementLeft={Logo} title={"Comprar " + match.params.coin.toUpperCase()} titleStyle={styles.title}  iconElementRight={UpperMenu} style={{
       backgroundColor: 'white'
     }} />
@@ -79,9 +80,8 @@ const ConfirmBuy = ({ match }) => (
         <div style={{ height: 100}}></div>
       
         <Link to="/buy"><RaisedButton label="Solicitar Compra" primary={true} style={styles.button} /></Link>
-      
     </div>
-
+    </div>
     </MuiThemeProvider>
 
 );

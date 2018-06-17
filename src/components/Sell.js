@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import AppBar from 'material-ui/AppBar';
@@ -9,6 +10,7 @@ import {GridList, GridTile} from 'material-ui/GridList';
 import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 import UpperMenu from './UpperMenu';
 import Logo from './Logo';
+import MyAsksActions from '../services/reducers/MyAsksRedux';
 
 const styles = {
   root:{
@@ -56,52 +58,53 @@ const muiTheme = getMuiTheme({
   },
 });
 
-const Sell = ({ match }) => (
-  <MuiThemeProvider muiTheme={getMuiTheme(muiTheme)}>
-    <AppBar iconElementLeft={Logo} title="Vender" titleStyle={styles.title}  iconElementRight={UpperMenu} style={{
-      backgroundColor: 'white'
-    }} />
-    <div style={styles.root}>
-    <div style={{ height: 20}}></div>
-    <GridList
-      cellHeight={160}
-      style={styles.gridList}
-    >
-        <Link to="/coinconfiguration/chaucha">
-            <GridTile
-            key={''}
-            title={'Chaucha'}
-            subtitle={<span><b>{'Activo'}</b></span>}
-            actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
-            >
-            <img alt="" style={styles.tiles} src={require('../images/chaucha.png')} />
-            </GridTile>
-        </Link>
-        <Link to="/coinconfiguration/luka">
-            <GridTile
-            key={''}
-            title={'LuKa'}
-            subtitle={<span><b>{'Activo'}</b></span>}
-            actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
-            >
-            <img alt="" style={styles.tiles} src={require('../images/luka.png')} />
-            </GridTile>
-        </Link>
-        <Link to="/coinconfiguration/ethereum">
-            <GridTile
-            key={''}
-            title={'Ethereum'}
-            subtitle={<span><b>{'Inactivo'}</b></span>}
-            actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
-            >
-            <img alt="" style={styles.tiles} src={require('../images/ethereum.png')} />
-            </GridTile>
-        </Link>
-    </GridList>
-    </div>
+class Sell extends Component {
 
-    </MuiThemeProvider>
+  componentDidMount() {
+    this.props.fetchAsks()
+  }
 
-);
+  asks() {
+    const { asks } = this.props
+    return Object.values(asks).map(ask => (
+      <Link key={ask.id} to={'/coinconfiguration/' + ask.market}>
+        <GridTile
+          key={''}
+          title={ask.market}
+          subtitle={<span><b>{ask.status ? 'Activo' : 'Inactivo'}</b></span>}
+        >
+          <img alt="" style={styles.tiles} src={require('../images/' + ask.market + '.png')} />
+        </GridTile>
+      </Link>
+    ))
+  }
 
-export default Sell;
+  render() {
+    return (
+      <MuiThemeProvider muiTheme={getMuiTheme(muiTheme)}>
+        <div>
+        <AppBar iconElementLeft={Logo} title="Vender" titleStyle={styles.title}  iconElementRight={UpperMenu} style={{
+          backgroundColor: 'white'
+        }} />
+        <div style={styles.root}>
+          <div style={{height: 20}}></div>
+          <GridList
+            cellHeight={160}
+            style={styles.gridList}
+          >
+            {this.asks()}
+          </GridList>
+        </div>
+        </div>
+      </MuiThemeProvider>
+    )
+  }
+}
+
+const mapStateToProps = ({ userAsks }) => ({ asks: userAsks.asks })
+
+const mapDispatchToProps = (dispatch) => ({
+  fetchAsks: () => dispatch(MyAsksActions.fetchMyAsks()),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Sell)
