@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import AppBar from 'material-ui/AppBar';
@@ -7,9 +8,9 @@ import TextField from 'material-ui/TextField';
 import {fullBlack, purpleA700, limeA200} from 'material-ui/styles/colors';
 import serializeForm from 'form-serialize'
 import Logo from './Logo';
-import { getToken } from '../utils/api'
 import { Redirect } from 'react-router-dom'
 import CircularProgress from 'material-ui/CircularProgress';
+import UserActions from '../services/reducers/UserRedux';
 
 const styles = {
   root:{
@@ -20,7 +21,7 @@ const styles = {
     alignItems: 'center'
   },
   button: {
-    alignItems: 'center'    
+    alignItems: 'center'
   },
   logo: {
     width: 50,
@@ -52,66 +53,67 @@ const space = (
 
 class Login extends React.Component {
   state = {
+    isUserLoggedIn: null,
     error : {
       password: '',
       email: ''
     },
     redirect: false,
-    token: '',
     loading: false
   }
   
-  handleSubmit = async(e) => {
+  handleSubmit = (e) => {
     e.preventDefault()
     const values = serializeForm(e.target, { hash: true })
-    try{
-      if(values.email && values.password){
+    if (!values.email || !values.password) {
+      if(!values.email) {
         this.setState((state) => ({
-          loading: true
+          error: {
+            email: 'Este campo es requerido.'
+          }
         }))
-        const response = await getToken(values)
-        if (response.token) {
-          this.setState((state) => ({
-            error: {             
-              email: '',
-              password: ''
-            },
-            token: response.token,
-            redirect: true
-          }))          
-        }
-
       }
       else {
-        if(!values.email) {
-          this.setState((state) => ({
-            error: {             
-              email: 'Este campo es requerido.'
-            }
-          }))
-        }
-        else {
-          this.setState((state) => ({
-            error: {
-              password: 'Este campo es requerido.' 
-            }
-          }))
-        }
+        this.setState((state) => ({
+          error: {
+            password: 'Este campo es requerido.' 
+          }
+        }))
       }
-  
     }
-    catch(err){
+    else{
+      this.setState((state) => ({
+        loading: true
+      }))
+      // Dispatch event
+      this.props.tryLogin(values)    
+    }
+  }
+  
+  checkSubmit = () => {
+    if(this.props.isUserLoggedIn === false && this.state.error.password === '' && this.state.loading === true){
       this.setState((state) => ({
         error: {
           password: 'Error al ingresar al sistema. Revisa tus datos e ingresa nuevamente'
         },
         loading: false
-      }))      
-
+      }))
     }
+    else if(this.props.isUserLoggedIn === true){
+      this.setState((state) => ({
+        error: {
+          email: '',
+          password: ''
+        },
+        redirect: true
+      }))
+    }
+
   }
 
-  render = () => {    
+  render = () => {
+    this.checkSubmit()
+
     if(this.state.redirect){
       return <Redirect to={{pathname: "/balance", state: {token: this.state.token}}} />;
     } 
@@ -153,5 +155,15 @@ class Login extends React.Component {
   };
 }
 
+const mapStateToProps = (state) => {
+  return {
+    isUserLoggedIn: state.users.isUserLoggedIn
+  }
+}
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  tryLogin: (user) => dispatch(UserActions.tryLogin(user)),
+})
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

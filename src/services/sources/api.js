@@ -6,7 +6,8 @@ const create = () => {
   const api = apisauce.create({
     baseURL,
     headers: {
-      'Cache-Control': 'no-cache'
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
     },
     timeout: 3600
   })
@@ -17,9 +18,10 @@ const create = () => {
   //User API
   const registerUser = (user) => api.post(`/user/register`, user)
   const getToken = (user) => api.post(`/user/token`, user)
-  const getUser = (id) => api.get(`/user${id}`)
+  const getUser = (id) => api.get(`/user/${id}`)
 
   return {
+    internal: api,
     market,
     saveAsk,
     myAsks,
