@@ -11,6 +11,7 @@ import Logo from './Logo';
 import { Redirect } from 'react-router-dom'
 import CircularProgress from 'material-ui/CircularProgress';
 import UserActions from '../services/reducers/UserRedux';
+import * as R from 'ramda';
 
 const styles = {
   root:{
@@ -61,59 +62,57 @@ class Login extends React.Component {
     redirect: false,
     loading: false
   }
+
+  componentDidUpdate = (prevProps) => {
+    if(this.props.isUserLoggedIn !== prevProps.isUserLoggedIn || this.state.loading === true){
+      this.checkSubmit()
+    }
+  }
   
   handleSubmit = (e) => {
     e.preventDefault()
     const values = serializeForm(e.target, { hash: true })
-    if (!values.email || !values.password) {
-      if(!values.email) {
-        this.setState((state) => ({
-          error: {
-            email: 'Este campo es requerido.'
-          }
-        }))
-      }
-      else {
-        this.setState((state) => ({
-          error: {
-            password: 'Este campo es requerido.' 
-          }
-        }))
-      }
-    }
-    else{
+    if (!R.isNil(values.email) && !R.isNil(values.password)) {
       this.setState((state) => ({
-        loading: true
+        loading: true,
+        error : {
+          password: '',
+          email: ''
+        }
       }))
       // Dispatch event
-      this.props.tryLogin(values)    
+      this.props.tryLogin(values)
+      return
     }
+    let error = {}
+    error['email'] = R.isNil(values.email) ? 'Este campo es requerido.' : ''
+    error['password'] = R.isNil(values.password) ? 'Este campo es requerido.' : ''
+
+    this.setState({error})
   }
   
-  checkSubmit = () => {
-    if(this.props.isUserLoggedIn === false && this.state.error.password === '' && this.state.loading === true){
-      this.setState((state) => ({
+  checkSubmit = () => {    
+    if(this.props.isUserLoggedIn === false){
+      this.setState({
         error: {
           password: 'Error al ingresar al sistema. Revisa tus datos e ingresa nuevamente'
         },
         loading: false
-      }))
+      })
     }
     else if(this.props.isUserLoggedIn === true){
-      this.setState((state) => ({
+      this.setState({
         error: {
           email: '',
           password: ''
         },
         redirect: true
-      }))
+      })
     }
 
   }
 
   render = () => {
-    this.checkSubmit()
-
     if(this.state.redirect){
       return <Redirect to={{pathname: "/balance", state: {token: this.state.token}}} />;
     } 

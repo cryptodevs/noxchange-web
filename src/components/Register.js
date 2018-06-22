@@ -20,7 +20,7 @@ const styles = {
     alignItems: 'center'
   },
   button: {
-    alignItems: 'center'    
+    alignItems: 'center'
   },
   logo: {
     width: 50,
@@ -94,7 +94,7 @@ class Register extends React.Component {
           this.setState((state) => ({
             repeat_password: 'Este campo es requerido.'
           }))
-        }                                     
+        }
       }
   
     }
@@ -106,8 +106,8 @@ class Register extends React.Component {
         repeat_password: '',
         email: '',
         loading: false
-      }))     
-    }    
+      }))
+    }
   }
 
   render = () => {
