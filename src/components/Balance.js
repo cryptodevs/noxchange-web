@@ -57,7 +57,6 @@ const muiTheme = getMuiTheme({
 
 class Balance extends React.Component {
   render = () =>{
-    console.log(this.props.location.state.token)
     return(
       <MuiThemeProvider muiTheme={getMuiTheme(muiTheme)}>
       <AppBar iconElementLeft={Logo} title="Balance" titleStyle={styles.title}  iconElementRight={UpperMenu} style={{

@@ -6,6 +6,7 @@ export default () => {
   const rootReducer = combineReducers({
     markets: require('./AsksRedux').reducer,
     userAsks: require('./MyAsksRedux').reducer,
+    users: require('./UserRedux').reducer,
   })
   return configureStore(rootReducer, rootSaga)
 }
