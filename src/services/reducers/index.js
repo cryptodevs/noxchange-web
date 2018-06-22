@@ -7,6 +7,8 @@ export default () => {
     markets: require('./AsksRedux').reducer,
     userAsks: require('./MyAsksRedux').reducer,
     users: require('./UserRedux').reducer,
+    bids: require('./BidsRedux').reducer,
+    userBids: require('./MyBidsRedux').reducer,
   })
   return configureStore(rootReducer, rootSaga)
 }
