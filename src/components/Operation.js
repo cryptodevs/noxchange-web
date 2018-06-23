@@ -16,6 +16,8 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import Logo from './Logo';
 import { Link } from "react-router-dom";
 import MyBidsActions from '../services/reducers/MyBidsRedux';
+import * as R from 'ramda'
+import RaisedButton from 'material-ui/RaisedButton';
 
 const styles = {
   root:{
@@ -83,35 +85,17 @@ const rightIconMenu = (
     </IconMenu>
   );
 
-class Market extends Component {
+class Operation extends Component {
 
   componentDidMount() {
     this.props.fetchMyBids()
   }
 
-  bids() {
-    const { bids } = this.props
-    return bids.map(bid => {
-      let primaryText = `${bid.qty} ${bid.market} status=${bid.status}`
-      return(<Link key={bid.id} style={styles.links} to={"/operation/view/"+ bid.id}>
-        <ListItem
-          leftAvatar={<img style={styles.logo} alt="" src={require('../images/'+ bid.market + '.png')} />}
-          primaryText={primaryText}
-          secondaryText={
-            <p>
-              <span style={{color: darkBlack}}>Precio: {bid.price} CLP</span>
-              <br />
-              Usuario: {bid.username}; {bid.created_at}
-            </p>
-          }
-          secondaryTextLines={2}
-        />
-        <Divider inset={true} />
-      </Link>
-    )})
-  }
-
   render() {
+    let { match } = this.props
+    let bidId = match.params.id
+    let bid = R.find(R.propEq('id', parseInt(bidId)))(this.props.bids) // cochino
+    if (!bid) return null
     return (
       <MuiThemeProvider muiTheme={getMuiTheme(muiTheme)}>
         <div>
@@ -120,10 +104,16 @@ class Market extends Component {
         }} />
         <div style={styles.root}>
             <div style={{ height: 20}}></div>
-          <List>
-            <Subheader>Ordenar por: <Link to="#"> Precio </Link> | <Link to="#">Ventas</Link></Subheader>
-            {this.bids()}
-          </List>
+            <img style={styles.logo} alt="" src={require('../images/'+ bid.market + '.png')} />
+            <h2>Solicitud de compra</h2>
+            <p>Estado: {bid.status}</p>
+            <p>Usuario: {bid.username}</p>
+            <p>Cantidad: {bid.qty} {bid.market}</p>
+            <p>Precio: {bid.price}</p>
+            <p>Total: {bid.price*bid.qty}</p>
+            <p>Fecha: {bid.created_at}</p>
+            <p>Escrow address: {bid.escrow_address}</p>
+            <RaisedButton label="Aceptar" primary={true} style={styles.button} onClick={()=>this.props.acceptBid(bid.id)}/>
         </div>
         </div>
       </MuiThemeProvider>
@@ -135,7 +125,7 @@ const mapStateToProps = ({ userBids }) => ({ bids: userBids.bids })
 
 const mapDispatchToProps = (dispatch) => ({
   fetchMyBids: () => dispatch(MyBidsActions.fetchMyBids()),
+  acceptBid: (bidId) => dispatch(MyBidsActions.acceptBid(bidId)),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Market)
-
+export default connect(mapStateToProps, mapDispatchToProps)(Operation)

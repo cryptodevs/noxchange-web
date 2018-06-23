@@ -11,3 +11,8 @@ export function * myBids (api) {
   const response = yield call(api.myBids)
   yield put(MyBidsActions.setBids(response.data))
 }
+
+export function * acceptBid (api, action) {
+  const { bidId } = action
+  const response = yield call(api.acceptBid, bidId)
+}

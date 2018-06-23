@@ -17,6 +17,7 @@ import Buy from './components/Buy'
 import Market from './components/Market';
 import ConfirmBuy from './components/ConfirmBuy';
 import Operations from './components/Operations';
+import Operation from './components/Operation';
 import configureStore from './services/reducers'
 
 const store = configureStore()
@@ -38,6 +39,7 @@ ReactDOM.render(
         <Route path="/market/:coin" component={Market} />
         <Route path="/confirmbuy/:coin/:id" component={ConfirmBuy} />
         <Route path="/operations" component={Operations} />
+        <Route path="/operation/view/:id" component={Operation} />
       </div>
     </BrowserRouter>
   </Provider>

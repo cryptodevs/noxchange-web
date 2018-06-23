@@ -21,6 +21,7 @@ const create = () => {
   const getUser = (id) => api.get(`/user/${id}`)
   const saveBid = (bid) => api.post('/bid', bid)
   const myBids = (bid) => api.get('/user/bids')
+  const acceptBid = (bidId) => api.post('/bid/accept', {bid_id: bidId})
 
   return {
     internal: api,
@@ -32,6 +33,7 @@ const create = () => {
     getUser
     saveBid,
     myBids,
+    acceptBid,
   }
 }
 

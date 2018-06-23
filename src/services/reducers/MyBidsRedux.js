@@ -4,6 +4,7 @@ import Immutable from 'seamless-immutable'
 const { Types, Creators } = createActions({
   setBids: ['bids'],
   fetchMyBids: [],
+  acceptBid: ['bidId'],
 })
 
 export const MyBidsTypes = Types
@@ -21,7 +22,10 @@ export const setBids = (state, action) => {
   return state.merge({ bids })
 }
 
+export const acceptBid = (state, action) => state
+
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.SET_BIDS]: setBids,
   [Types.FETCH_MY_BIDS]: fetchMyBids,
+  [Types.ACCEPT_BID]: acceptBid,
 })
