@@ -5,6 +5,7 @@ const { Types, Creators } = createActions({
   setBids: ['bids'],
   fetchMyBids: [],
   acceptBid: ['bidId'],
+  rejectBid: ['bidId'],
 })
 
 export const MyBidsTypes = Types
@@ -23,9 +24,11 @@ export const setBids = (state, action) => {
 }
 
 export const acceptBid = (state, action) => state
+export const rejectBid = (state, action) => state
 
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.SET_BIDS]: setBids,
   [Types.FETCH_MY_BIDS]: fetchMyBids,
   [Types.ACCEPT_BID]: acceptBid,
+  [Types.REJECT_BID]: rejectBid,
 })

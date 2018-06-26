@@ -22,6 +22,7 @@ const create = () => {
   const saveBid = (bid) => api.post('/bid', bid)
   const myBids = (bid) => api.get('/user/bids')
   const acceptBid = (bidId) => api.post('/bid/accept', {bid_id: bidId})
+  const rejectBid = (bidId) => api.post('/bid/reject', {bid_id: bidId})
 
   return {
     internal: api,
@@ -34,6 +35,7 @@ const create = () => {
     saveBid,
     myBids,
     acceptBid,
+    rejectBid,
   }
 }
 

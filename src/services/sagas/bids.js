@@ -16,3 +16,8 @@ export function * acceptBid (api, action) {
   const { bidId } = action
   const response = yield call(api.acceptBid, bidId)
 }
+
+export function * rejectBid (api, action) {
+  const { bidId } = action
+  const response = yield call(api.rejectBid, bidId)
+}

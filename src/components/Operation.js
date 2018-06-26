@@ -91,6 +91,14 @@ class Operation extends Component {
     this.props.fetchMyBids()
   }
 
+  buttons(bid) {
+    if (bid.status === 'REQUESTED')
+      return (<div>
+                <RaisedButton label="Aceptar" primary={true} style={styles.button} onClick={()=>this.props.acceptBid(bid.id)}/>
+                <RaisedButton label="Rechazar" secondary={true} style={styles.button} onClick={()=>this.props.rejectBid(bid.id)}/>
+              </div>)
+  }
+
   render() {
     let { match } = this.props
     let bidId = match.params.id
@@ -112,8 +120,8 @@ class Operation extends Component {
             <p>Precio: {bid.price}</p>
             <p>Total: {bid.price*bid.qty}</p>
             <p>Fecha: {bid.created_at}</p>
-            <p>Escrow address: {bid.escrow_address}</p>
-            <RaisedButton label="Aceptar" primary={true} style={styles.button} onClick={()=>this.props.acceptBid(bid.id)}/>
+            {bid.escrow_address && <p>Escrow address: {bid.escrow_address}</p>}
+            {this.buttons(bid)}
         </div>
         </div>
       </MuiThemeProvider>
@@ -126,6 +134,7 @@ const mapStateToProps = ({ userBids }) => ({ bids: userBids.bids })
 const mapDispatchToProps = (dispatch) => ({
   fetchMyBids: () => dispatch(MyBidsActions.fetchMyBids()),
   acceptBid: (bidId) => dispatch(MyBidsActions.acceptBid(bidId)),
+  rejectBid: (bidId) => dispatch(MyBidsActions.rejectBid(bidId)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Operation)
