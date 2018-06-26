@@ -31,7 +31,7 @@ const create = () => {
     myAsks,
     registerUser,
     getToken,
-    getUser
+    getUser,
     saveBid,
     myBids,
     acceptBid,
