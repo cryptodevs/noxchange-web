@@ -12,40 +12,8 @@ import { Redirect } from 'react-router-dom'
 import CircularProgress from 'material-ui/CircularProgress';
 import UserActions from '../services/reducers/UserRedux';
 import * as R from 'ramda';
+import { styles, muiTheme } from './styles'
 
-const styles = {
-  root:{
-    display: 'flex',
-    flexWrap: 'no-wrap',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  button: {
-    alignItems: 'center'
-  },
-  logo: {
-    width: 50,
-    height: 50
-  },
-  title: {
-    fontSize: 16, 
-    textAlign: 'center' 
-  }
-  
-};
-
-const muiTheme = getMuiTheme({
-  palette: {
-    textColor: fullBlack,
-    primary1Color: purpleA700,
-    accent1Color: limeA200,
-  },
-  appBar: {
-    height: 60,
-    textColor: fullBlack
-  },
-});
 
 const space = (
     <div style={{ height: 10, width: 50}}></div>
@@ -91,7 +59,7 @@ class Login extends React.Component {
     this.setState({error})
   }
   
-  checkSubmit = () => {    
+  checkSubmit = () => {
     if(this.props.isUserLoggedIn === false){
       this.setState({
         error: {
